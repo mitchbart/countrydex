@@ -3,23 +3,28 @@ import axios from 'axios'
 
 import Search from './components/Search'
 import ContentMain from './components/ContentMain'
+import AdvancedSearch from './components/AdvancedSearch'
 
 function App() {
   const [countryData, setCountryData] = useState([])
   const [filter, setFilter] = useState("")
   const [showOne, setShowOne] = useState("")
   const [region, setRegion] = useState("")
-  const [subregion, setSubregion] = useState("")
+  const [subregion, setSubregion] = useState([])
   const [population, setPopulation] = useState(false)
 
   //get countries from api only on initial load, store in countrydata
   useEffect(() => {
+    console.log('effect')
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => {
+        console.log('promise fulfilled')
         setCountryData(response.data)
     })
   }, [])
+  console.log('render', countryData.length, 'countries')
+  //console.log(countryData)
 
 
   //function to control sorting by population or alphabetical within countriestoshow
@@ -31,32 +36,63 @@ function App() {
     )
   }
 
+
+
   const countriesToShow = !filter && !region
     ? countryData
       .sort(sortBy())
     : countryData
-      .filter(country => country.region === region)
-      .filter(country => country.subregion.includes(subregion))
+      .filter(country => country.region.includes(region))
+      //.filter(country => subregion.includes(country.subregion))
+      .filter(country => subregion.includes(country.subregion))
+      // .filter(country => country.subregion.includes(subregion))
+      //.filter(country => country.subregion.indexOf(subregion) >= -1)
+      //.filter(country => country.subregion.includes(subregion.some(x => x === country.subregion)))
       .filter(country => country.name.toLowerCase()
         .includes(filter.toLowerCase()))
       .sort(sortBy())
 
+
+  //const arr1 = countryData.filter(country => country.subregion.includes(subregion))
+  // const arr1 = countryData.filter(country => subregion.includes(country.subregion))
+
+  // console.log(arr1)
+  // const found = subregion.some(r => arr1.includes(r))
+  // console.log(found)
+
+
   //complete reset of search
   function handleReset() {
-    console.log("handlereset")
+    //console.log("handlereset")
     setShowOne("")
     setFilter("")
+    setRegion("")
+    setSubregion("")
   }
 
   const regionChange = (event) => {
     //console.log(event.target.value)
     setRegion(event.target.value)
-    setSubregion("")
+    setSubregion([])
     //console.log(region)
   }
 
   const subregionChange = (event) => {
     setSubregion(event.target.value)
+  }
+
+  //testing checkboxes for subregion
+  function handleSubregion(event) {
+    //console.log(event.target.name)
+    if (event.target.checked) {
+      //console.log(event.target.name, 'checked')
+      setSubregion(subregion.concat(event.target.name))
+      //console.log(subregion)
+    }
+    else {
+      setSubregion(subregion.filter(name => name !== event.target.name))
+      //console.log('havent added this funtionality')
+    }
   }
 
   const regionArray = [...new Set(countryData
@@ -69,7 +105,7 @@ function App() {
     .filter(country => country.region === region)
     .map(country => country.subregion))]
     .sort()
-  console.log(subregionArray)
+  //console.log(subregionArray)
 
 
   return (
@@ -82,43 +118,16 @@ function App() {
         handleReset={handleReset}
       />
 
-      <div>
-        Region
-        <select 
-          value={region}
-          onChange={regionChange}
-        >
-          <option value="">All</option>
-          {regionArray.map(region => 
-            <option 
-              key={region} 
-              value={region}
-            >
-            {region}
-            </option>
-        )}
-        </select>
+      <AdvancedSearch 
+        region={region}
+        regionChange={regionChange}
+        regionArray={regionArray}
+        subregion={subregion}
+        subregionChange={subregionChange}
+        subregionArray={subregionArray}
 
-        {region && 
-          <div>select subregion
-            <select 
-              value={subregion}
-              onChange={subregionChange}
-            >
-              <option value="">All</option>
-              {subregionArray.map(subregion => 
-                <option 
-                  key={subregion} 
-                  value={subregion}
-                >
-                {subregion}
-                </option>
-              )}
-            </select>
-          </div>
-        }
-
-      </div>
+        handleSubregion={handleSubregion}
+      />
 
       <button onClick={() => setPopulation(!population)}>
         sort by {population ? "alphabetical" : "population"}
