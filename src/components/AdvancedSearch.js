@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AdvancedSearch({ region, regionChange, regionArray, subregion, subregionChange, subregionArray, handleSubregion }) {
+export default function AdvancedSearch({ region, regionChange, regionArray, subregion, subregionChange, subregionArray}) {
 
 
 
@@ -22,7 +22,7 @@ export default function AdvancedSearch({ region, regionChange, regionArray, subr
         )}
         </select>
 
-        {/* {region && 
+        {region && 
           <div>select subregion
             <select 
               value={subregion}
@@ -39,9 +39,9 @@ export default function AdvancedSearch({ region, regionChange, regionArray, subr
               )}
             </select>
           </div>
-        } */}
+        }
 
-        <fieldset>
+        {/* <fieldset>
           <legend>select subregion</legend>
             {subregionArray.map(subregion => 
               <div key={subregion}>
@@ -49,7 +49,8 @@ export default function AdvancedSearch({ region, regionChange, regionArray, subr
                 <label htmlFor={subregion}>{subregion}</label>
               </div>
             )}
-        </fieldset>
+        </fieldset> */}
+
       </div>
 
   )

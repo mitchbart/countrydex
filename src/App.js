@@ -10,7 +10,7 @@ function App() {
   const [filter, setFilter] = useState("")
   const [showOne, setShowOne] = useState("")
   const [region, setRegion] = useState("")
-  const [subregion, setSubregion] = useState([])
+  const [subregion, setSubregion] = useState("")
   const [population, setPopulation] = useState(false)
 
   //get countries from api only on initial load, store in countrydata
@@ -37,33 +37,21 @@ function App() {
   }
 
 
-
   const countriesToShow = !filter && !region
     ? countryData
       .sort(sortBy())
     : countryData
       .filter(country => country.region.includes(region))
       //.filter(country => subregion.includes(country.subregion))
-      .filter(country => subregion.includes(country.subregion))
-      // .filter(country => country.subregion.includes(subregion))
-      //.filter(country => country.subregion.indexOf(subregion) >= -1)
-      //.filter(country => country.subregion.includes(subregion.some(x => x === country.subregion)))
+      .filter(country => country.subregion.includes(subregion))
       .filter(country => country.name.toLowerCase()
         .includes(filter.toLowerCase()))
       .sort(sortBy())
 
 
-  //const arr1 = countryData.filter(country => country.subregion.includes(subregion))
-  // const arr1 = countryData.filter(country => subregion.includes(country.subregion))
-
-  // console.log(arr1)
-  // const found = subregion.some(r => arr1.includes(r))
-  // console.log(found)
-
 
   //complete reset of search
   function handleReset() {
-    //console.log("handlereset")
     setShowOne("")
     setFilter("")
     setRegion("")
@@ -71,29 +59,23 @@ function App() {
   }
 
   const regionChange = (event) => {
-    //console.log(event.target.value)
     setRegion(event.target.value)
-    setSubregion([])
-    //console.log(region)
+    setSubregion("")
   }
 
   const subregionChange = (event) => {
     setSubregion(event.target.value)
   }
 
-  //testing checkboxes for subregion
-  function handleSubregion(event) {
-    //console.log(event.target.name)
-    if (event.target.checked) {
-      //console.log(event.target.name, 'checked')
-      setSubregion(subregion.concat(event.target.name))
-      //console.log(subregion)
-    }
-    else {
-      setSubregion(subregion.filter(name => name !== event.target.name))
-      //console.log('havent added this funtionality')
-    }
-  }
+  //checkbox functionality for subregion that has been removed
+  // function handleSubregion(event) {
+  //   if (event.target.checked) {
+  //     setSubregion(subregion.concat(event.target.name))
+  //   }
+  //   else {
+  //     setSubregion(subregion.filter(name => name !== event.target.name))
+  //   }
+  // }
 
   const regionArray = [...new Set(countryData
     .filter(country => country.region !== "")
@@ -125,8 +107,6 @@ function App() {
         subregion={subregion}
         subregionChange={subregionChange}
         subregionArray={subregionArray}
-
-        handleSubregion={handleSubregion}
       />
 
       <button onClick={() => setPopulation(!population)}>
@@ -145,6 +125,7 @@ function App() {
       </fieldset> */}
 
       <ContentMain 
+        countryData={countryData}
         countriesToShow={countriesToShow}
         showOne={showOne}
         setShowOne={setShowOne}

@@ -1,15 +1,17 @@
 import React from 'react'
+import FullDetail from './FullDetail'
+import CountryCard from './CountryCard.js'
 
-export default function ContentMain({ countriesToShow, showOne, setShowOne }) {
+export default function ContentMain({ countriesToShow, showOne, setShowOne, countryData }) {
 
   if (showOne) {
     console.log(showOne)
     return (
-      <div>
-        <button onClick={() => setShowOne("")}>back</button>
-        <h1>{showOne.name}</h1>
-        <p>{showOne.population}</p>
-      </div>
+      <FullDetail
+        countryData={countryData}
+        showOne={showOne}
+        setShowOne={setShowOne}
+      />
     )
   }
   if (countriesToShow.length === 0) {
@@ -18,13 +20,19 @@ export default function ContentMain({ countriesToShow, showOne, setShowOne }) {
     )
   }
   return (
+    
     <div>
       <ul>
         {countriesToShow.map(country => 
-          <li key={country.name}>
-            {country.name} 
-            <button onClick={() => setShowOne(country)}>more info</button>
-          </li>
+          <CountryCard
+            key={country.name}
+            country={country}
+            setShowOne={setShowOne}
+          />
+          // <li key={country.name}>
+          //   {country.name} 
+          //   <button onClick={() => setShowOne(country)}>more info</button>
+          // </li>
         )}
       </ul>
     </div>
