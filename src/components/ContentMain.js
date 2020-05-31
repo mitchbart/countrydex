@@ -3,9 +3,8 @@ import FullDetail from './FullDetail'
 import CountryCard from './CountryCard.js'
 
 export default function ContentMain({ countriesToShow, showOne, setShowOne, countryData }) {
-
   if (showOne) {
-    console.log(showOne)
+    //console.log(showOne)
     return (
       <FullDetail
         countryData={countryData}
@@ -16,13 +15,12 @@ export default function ContentMain({ countriesToShow, showOne, setShowOne, coun
   }
   if (countriesToShow.length === 0) {
     return (
-      <div>No results</div>
+      <div>No results matching your search</div>
     )
   }
   return (
-    
-    <div>
-      <ul>
+    <div className="grid-body">
+      {/* <ul> */}
         {countriesToShow.map(country => 
           <CountryCard
             key={country.name}
@@ -34,7 +32,7 @@ export default function ContentMain({ countriesToShow, showOne, setShowOne, coun
           //   <button onClick={() => setShowOne(country)}>more info</button>
           // </li>
         )}
-      </ul>
+      {/* </ul> */}
     </div>
   )
 }

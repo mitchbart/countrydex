@@ -1,19 +1,19 @@
 import React from 'react'
 import CountryCard from './CountryCard'
 import Map from './Map'
+import Footer from './Footer'
 
 export default function FullDetail({ showOne, setShowOne, countryData }) {
-  console.log(showOne)
+
   const neighbors = showOne.borders
-  console.log(neighbors)
-  //console.log(showOne.languages.length)
-  const options = {
+  const options = { //options below are sent to Map component
     center: { lat: showOne.latlng[0], lng: showOne.latlng[1] },
     zoom: 5,
   }
+
   return (
     <div>
-      <button onClick={() => setShowOne("")}>back</button>
+      <button onClick={() => setShowOne("")}>return to search</button>
       <h2>{showOne.name}</h2>
       <h3>{showOne.alpha2Code} | {showOne.alpha3Code}</h3>
       <img src={showOne.flag} alt={showOne.name} height="120px"/>
@@ -58,7 +58,7 @@ export default function FullDetail({ showOne, setShowOne, countryData }) {
 
       {showOne.borders.length > 0 && 
         <div>
-          <h3>Bordering countries</h3>
+          <h3>{showOne.name} shares a border with:</h3>
           {
             countryData
               .filter(country => neighbors.includes(country.alpha3Code))
@@ -73,6 +73,8 @@ export default function FullDetail({ showOne, setShowOne, countryData }) {
 
         </div>
       }
+      <button onClick={() => setShowOne("")}>return to search</button>
+      <Footer />
     </div>
   )
 }
