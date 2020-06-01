@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CountryCard from './CountryCard'
 import Map from './Map'
 import Footer from './Footer'
 
 export default function FullDetail({ showOne, setShowOne, countryData }) {
+
+  console.log(showOne)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const neighbors = showOne.borders
   const options = { //options below are sent to Map component
@@ -17,10 +23,21 @@ export default function FullDetail({ showOne, setShowOne, countryData }) {
       <h2>{showOne.name}</h2>
       <h3>{showOne.alpha2Code} | {showOne.alpha3Code}</h3>
       <img src={showOne.flag} alt={showOne.name} height="120px"/>
+
+      {showOne.altSpellings.length > 1 && 
+        <div>
+          <p>Alternate names</p>
+          <ul>
+            {showOne.altSpellings.slice(1).map(name => <li key={name}>{name}</li>)}
+          </ul>
+        </div>
+      }
+
       <p>Population: {showOne.population.toLocaleString()}</p>
       <p>Region: {showOne.region}</p>
       <p>Subregion: {showOne.subregion}</p>
       <p>Capital: {showOne.capital}</p>
+      <p>Demonym: {showOne.demonym}</p>
 
       {showOne.languages.length === 1 && <p>Language: {showOne.languages[0].name}</p>}
       {showOne.languages.length > 1 && 
@@ -32,12 +49,12 @@ export default function FullDetail({ showOne, setShowOne, countryData }) {
         </div>
       }
 
-      {showOne.currencies.length === 1 && <p>Currency: {showOne.currencies[0].name} | {showOne.currencies[0].symbol}</p>}
+      {showOne.currencies.length === 1 && <p>Currency: {showOne.currencies[0].name} | {showOne.currencies[0].code} | {showOne.currencies[0].symbol}</p>}
       {showOne.currencies.length > 1 && 
         <div>
           <p>Local currencies</p>
           <ul>
-            {showOne.currencies.map(currency => <li key={currency.code}>{currency.name} | {currency.symbol}</li>)}
+            {showOne.currencies.map(currency => <li key={currency.code}>{currency.name} | {currency.code} | {currency.symbol}</li>)}
           </ul>
         </div>
       }

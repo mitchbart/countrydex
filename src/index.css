@@ -37,4 +37,10 @@ body {
 /**
   Main content grid
 **/
+.grid-body {
+  background: lime;
+}
 
+.card {
+  border: 1px dotted black;
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AdvancedSearch({ region, regionChange, regionArray, subregion, subregionChange, subregionArray}) {
+export default function AdvancedSearch({ region, regionChange, regionArray, subregion, subregionChange, subregionArray }) {
 
 
 
@@ -51,7 +51,8 @@ export default function AdvancedSearch({ region, regionChange, regionArray, subr
             )}
         </fieldset> */}
 
-      </div>
+
+    </div>
 
   )
 }

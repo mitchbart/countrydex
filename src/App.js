@@ -36,7 +36,7 @@ function App() {
     )
   }
 
-
+  //filter for which countries to show
   const countriesToShow = !filter && !region
     ? countryData
       .sort(sortBy())
@@ -79,15 +79,35 @@ function App() {
 
   const regionArray = [...new Set(countryData
     .filter(country => country.region !== "")
-    .map(country => country.region))]
+    .map(country => country.region)
+    )]
     .sort()
   //console.log(regionArray)
 
+  //at present this array relies on the value for the selected region, may change in the future
   const subregionArray = [...new Set(countryData
     .filter(country => country.region === region)
-    .map(country => country.subregion))]
+    .map(country => country.subregion)
+    )]
     .sort()
   //console.log(subregionArray)
+
+
+  //test array for currency, not using becuase ...
+  // const currencyArray = [...new Set(countriesToShow
+  //   .filter(country => country.languages[0].name !== "")
+  //   .map(country => country.languages
+  //     .map(currency => currency.name))
+  //     .reduce((flat, current) => flat.concat(current), [])
+  //     //.flat()
+  //     )]
+  //   .sort() 
+  // console.log(currencyArray)
+
+  // const currencyChange = (event) => {
+  //   setCurrency(event.target.value)
+  // }
+
 
 
   return (
