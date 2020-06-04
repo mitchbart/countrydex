@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-import Search from './components/Search'
+import Topbar from './components/Topbar'
+import Sidebar from './components/Sidebar'
 import ContentMain from './components/ContentMain'
-import AdvancedSearch from './components/AdvancedSearch'
 
 function App() {
   const [countryData, setCountryData] = useState([])
@@ -12,6 +12,9 @@ function App() {
   const [region, setRegion] = useState("")
   const [subregion, setSubregion] = useState("")
   const [population, setPopulation] = useState(false)
+  const [reverseOrder, setReverseOrder] = useState(false)
+  const [listView, setListView] = useState(false)
+  const [showSidebar, setShowSidebar] = useState(false)
 
   //get countries from api only on initial load, store in countrydata
   useEffect(() => {
@@ -29,6 +32,13 @@ function App() {
 
   //function to control sorting by population or alphabetical within countriestoshow
   function sortBy() {
+    if (reverseOrder) {
+      return (population 
+        ? (function (a, b) { return a.population - b.population}) 
+        : (function (a, b) { 
+          return b.name > a.name})
+      )
+    }
     return (population 
       ? (function (a, b) { return b.population - a.population}) 
       : (function (a, b) { 
@@ -44,9 +54,10 @@ function App() {
       .filter(country => country.region.includes(region))
       //.filter(country => subregion.includes(country.subregion))
       .filter(country => country.subregion.includes(subregion))
-      .filter(country => country.name.toLowerCase()
-        .includes(filter.toLowerCase()))
+      .filter(country => country.name.toLowerCase().includes(filter.toLowerCase()))
       .sort(sortBy())
+
+
 
 
 
@@ -112,26 +123,60 @@ function App() {
 
   return (
     <div className="cosmic-microwave-background">
-      <h1>Countrydex</h1>
+      
 
-      <Search
+      {/* <Search
         filter={filter}
         setFilter={setFilter}
         handleReset={handleReset}
+      /> */}
+
+      <Topbar
+        filter={filter}
+        setFilter={setFilter}
+        handleReset={handleReset} 
+        setListView={setListView}
       />
 
-      <AdvancedSearch 
+
+
+        
+        <button className="burger-button" onClick={()=> setShowSidebar(!showSidebar)}>
+          menu
+        </button>
+
+      <Sidebar
         region={region}
         regionChange={regionChange}
         regionArray={regionArray}
         subregion={subregion}
         subregionChange={subregionChange}
         subregionArray={subregionArray}
+        population={population}
+        setPopulation={setPopulation}
+        reverseOrder={reverseOrder}
+        setReverseOrder={setReverseOrder}
+        showSidebar={showSidebar}
       />
 
-      <button onClick={() => setPopulation(!population)}>
+      
+
+      
+      {/* <AdvancedSearch 
+        region={region}
+        regionChange={regionChange}
+        regionArray={regionArray}
+        subregion={subregion}
+        subregionChange={subregionChange}
+        subregionArray={subregionArray}
+      /> */}
+
+      {/* <button onClick={() => setPopulation(!population)}>
         sort by {population ? "alphabetical" : "population"}
       </button>
+      <button onClick={() => setReverseOrder(!reverseOrder)}>
+        reverse order
+      </button> */}
 
 {/* 
       <fieldset>
@@ -143,13 +188,16 @@ function App() {
         </div>
         )}
       </fieldset> */}
-
-      <ContentMain 
-        countryData={countryData}
-        countriesToShow={countriesToShow}
-        showOne={showOne}
-        setShowOne={setShowOne}
-      />
+      <div className="content-wrapper"> 
+        <ContentMain 
+          countryData={countryData}
+          countriesToShow={countriesToShow}
+          showOne={showOne}
+          setShowOne={setShowOne}
+          listView={listView}
+        />
+      </div>
+      
       
     </div>
   )

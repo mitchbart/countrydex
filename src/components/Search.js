@@ -8,7 +8,7 @@ export default function Search({ filter, setFilter, handleReset }) {
 
   return (
     <div>
-      <input value={filter} onChange={handleFilter} />
+      <input value={filter} onChange={handleFilter} placeholder="Search for a country" />
       <button onClick={handleReset}>
         clear all
       </button>
