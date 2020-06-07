@@ -1,7 +1,7 @@
 /**
   Font imports
 **/
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Montserrat:wght@900&display=swap');
 
 /**
   Custom Properties
@@ -31,6 +31,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+
 }
 
 /**
@@ -126,15 +132,24 @@ button:focus {
   align-items: center;
 }
 
+/* card css */
 .card {
   border: 1px dotted black;
   text-align: center;
+  background: #ddd;
+  padding-bottom: 1.5rem;
+}
+.card h3 {
+  font-size: 1.5rem;
+  -webkit-text-stroke: .8px black;
+  -webkit-text-fill-color: #ffffff;
+}
+.card-content {
+  /* background-color: slateblue; */
+  
 }
 
-.card-content {
-  background: salmon;
-  padding-bottom: 2rem;
-}
+
 
 .card-flag {
   border: 1px dashed black;

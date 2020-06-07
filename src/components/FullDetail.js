@@ -6,6 +6,7 @@ import Footer from './Footer'
 export default function FullDetail({ showOne, setShowOne, countryData }) {
 
   console.log(showOne)
+  console.log("full detail")
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -14,10 +15,10 @@ export default function FullDetail({ showOne, setShowOne, countryData }) {
 
   const neighbors = showOne.borders
   //options below are sent to Map component
-  const options = { 
-    center: { lat: showOne.latlng[0], lng: showOne.latlng[1] },
-    zoom: 5,
-  }
+  // const options = { 
+  //   center: { lat: showOne.latlng[0], lng: showOne.latlng[1] },
+  //   zoom: 5,
+  // }
 
   return (
     <div>
@@ -75,7 +76,8 @@ export default function FullDetail({ showOne, setShowOne, countryData }) {
         </div>
 
         <Map
-          options={options}
+          // options={options}
+          showOne={showOne}
         />
 
       </div>
