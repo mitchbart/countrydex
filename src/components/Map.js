@@ -6,9 +6,16 @@ export default function Map({ options, onMount, className, onMountProps, showOne
 
   useEffect(() => {
     // const onLoad = () => setMap(new window.google.maps.Map(ref.current, options))
+    console.log(showOne.area)
     const options = { 
       center: { lat: showOne.latlng[0], lng: showOne.latlng[1] },
-      zoom: 5,
+      //if (showOne.area > 6000000) {
+      //  zoom: 4,
+      //} else {
+      //  zoom: 5,
+      //}
+      zoom:  showOne.area > 6000000 ? 4 : showOne.area < 40000 ? 6 : showOne.area < 6000000 ? 5 : 7 
+      //zoom: 4,
     }
     const onLoad = () => setMap(new window.google.maps.Map(ref.current, options))
     if (!window.google) {

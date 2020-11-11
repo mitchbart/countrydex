@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AdvancedSearch({ region, regionChange, regionArray, subregion, subregionChange, subregionArray }) {
+export default function AdvancedSearch({ region, regionChange, regionArray, subregion, subregionChange, subregionArray, clearRegion, clearSubregion }) {
 
 
 
@@ -18,9 +18,13 @@ export default function AdvancedSearch({ region, regionChange, regionArray, subr
               value={region}
             >
             {region}
-            </option>
-        )}
+            </option>  
+          )}
         </select>
+
+        <button onClick={clearRegion}>
+          clear region
+        </button>
 
         {region && 
           <div>select subregion
@@ -38,6 +42,10 @@ export default function AdvancedSearch({ region, regionChange, regionArray, subr
                 </option>
               )}
             </select>
+
+            <button onClick={clearSubregion}>
+              clear subregion
+            </button>
           </div>
         }
 

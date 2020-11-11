@@ -12,6 +12,7 @@ function App() {
   const [region, setRegion] = useState("")
   const [subregion, setSubregion] = useState("")
   const [population, setPopulation] = useState(false)
+  const [area, setArea] = useState(false)
   const [reverseOrder, setReverseOrder] = useState(false)
   const [listView, setListView] = useState(false)
   const [showSidebar, setShowSidebar] = useState(false)
@@ -31,16 +32,33 @@ function App() {
 
 
   //function to control sorting by population or alphabetical within countriestoshow
+  // function sortBy() {
+  //   if (reverseOrder) {
+  //     return (population 
+  //       ? (function (a, b) { return a.population - b.population}) 
+  //       : (function (a, b) { 
+  //         return b.name > a.name})
+  //     )
+  //   }
+  //   return (population 
+  //     ? (function (a, b) { return b.population - a.population}) 
+  //     : (function (a, b) { 
+  //       return a.name > b.name})
+  //   )
+  // }
+
   function sortBy() {
     if (reverseOrder) {
-      return (population 
-        ? (function (a, b) { return a.population - b.population}) 
+      return (
+        population ? (function (a, b) { return a.population - b.population }) 
+        : area ? (function (a, b) { return a.area - b.area })
         : (function (a, b) { 
           return b.name > a.name})
       )
     }
     return (population 
-      ? (function (a, b) { return b.population - a.population}) 
+      ? (function (a, b) { return b.population - a.population})
+      : area ? (function (a, b) { return b.area - a.area }) 
       : (function (a, b) { 
         return a.name > b.name})
     )
@@ -70,7 +88,16 @@ function App() {
   }
 
   const regionChange = (event) => {
+    //console.log(event.target.value)
     setRegion(event.target.value)
+    setSubregion("")
+  }
+
+  function clearRegion() {
+    setRegion("")
+  }
+
+  function clearSubregion() {
     setSubregion("")
   }
 
@@ -138,8 +165,6 @@ function App() {
         setListView={setListView}
       />
 
-
-
         
         <button className="burger-button" onClick={()=> setShowSidebar(!showSidebar)}>
           menu
@@ -154,9 +179,13 @@ function App() {
         subregionArray={subregionArray}
         population={population}
         setPopulation={setPopulation}
+        area = {area}
+        setArea={setArea}
         reverseOrder={reverseOrder}
         setReverseOrder={setReverseOrder}
         showSidebar={showSidebar}
+        clearRegion={clearRegion}
+        clearSubregion={clearSubregion}
       />
 
       

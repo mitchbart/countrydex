@@ -9,12 +9,12 @@ export default function CountryCard({ country, setShowOne }) {
             <h3>{country.name}</h3>
           </div>
           <div className="title-alpha">
-            <div className="alpha2">
-              <h3>{country.alpha2Code}</h3>
+            <div className="alphacode">
+              <h4>{country.alpha2Code} | {country.alpha3Code}</h4>
             </div>
-            <div className="alpha3">
+            {/* <div className="alpha3">
               <h3>{country.alpha3Code}</h3>
-            </div>
+            </div> */}
           </div>
           
 
@@ -27,7 +27,7 @@ export default function CountryCard({ country, setShowOne }) {
           <p>Region: {country.region}</p>
           <p>Population: {country.population.toLocaleString()}</p>
           {country.capital && <p>Capital: {country.capital}</p>}
-          <button onClick={() => setShowOne(country)}>more info</button>
+          <button className="more-info" onClick={() => setShowOne(country)}>More Info</button>
         </div>
       </div>
     </div>
